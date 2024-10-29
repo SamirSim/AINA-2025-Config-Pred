@@ -1,1 +1,3 @@
-scp -r ssimoham@hpc-login.u-strasbg.fr:/home2020/home/icube/ssimoham/dt-wireless/data/result-regression-1.json . # À exécuter sur votre poste de travail
+#scp -r ssimoham@hpc-login.u-strasbg.fr:/home2020/home/icube/ssimoham/dt-wireless/data/result-regression-1.json . # À exécuter sur votre poste de travail
+scp ssimoham@grenoble.iot-lab.info:/senslab/users/ssimoham/.iot-lab/406919/serial_output diff-config.txt # À exécuter sur votre poste de travail
+scp ssimoham@grenoble.iot-lab.info:/senslab/users/ssimoham/.iot-lab/406884/serial_output same-config.txt # À exécuter sur votre poste de travail
