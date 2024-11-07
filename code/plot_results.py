@@ -6,13 +6,13 @@ import pandas as pd # type: ignore
 import matplotlib.pyplot as plt # type: ignore
 import seaborn as sns # type: ignore
 
-with open('../data/same-config-results.json', 'r') as file:
+with open('../data/diff-config-results.json', 'r') as file:
     data = json.load(file)
 
-with open('../data/naive-approach-results.json', 'r') as file:
+with open('../data/naive-approach-diff-results.json', 'r') as file:
     naive_data = json.load(file)
 
-with open('../data/same-config-merged-results.json', 'r') as file:
+with open('../data/diff-config-merged-results.json', 'r') as file:
     merged_data = json.load(file)
 
 # Prepare data for plotting
@@ -36,6 +36,14 @@ for node_id, features in naive_data.items():
         for mse in mse_list:
             naive_mse_data.append({'Node ID': node_id, 'Feature': feature, 'MSE': mse})
 
+# Loop through each node_id and feature
+for node_id, features in merged_data.items():
+    for feature, values in features.items():
+        mse_list = values['mse']
+        for mse in mse_list:
+            merged_mse_data.append({'Node ID': node_id, 'Feature': feature, 'MSE': mse})
+
+"""
 print(merged_data.items())
 # Loop through each node_id and feature
 for feature, values in merged_data.items():
@@ -43,6 +51,7 @@ for feature, values in merged_data.items():
     for mse in mse_list:
         for node_id in node_ids:
             merged_mse_data.append({'Node ID': node_id, 'Feature': feature, 'MSE': mse})
+"""
 
 print(merged_mse_data)
 

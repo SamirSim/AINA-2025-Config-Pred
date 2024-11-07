@@ -27,11 +27,17 @@ def compute_statistics(data):
 
     return stats
 
-file_title = 'same-config-latency'
+file_title = 'diff-config'
 filename = '../data/'+file_title+'-series.json'
 
 with open(filename, 'r') as file:
     data = json.load(file)
+
+# Calculate the cutoff index for the first 80% of the data
+cutoff_index = int(0.8 * len(data))
+
+# Keep only the first 80% of the items by converting to list and back to dictionary
+data = dict(list(data.items())[:cutoff_index])
 
 merged_data = {}
 for node, config_dict in data.items():

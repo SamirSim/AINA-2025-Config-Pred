@@ -17,7 +17,7 @@ from sklearn.metrics import mean_absolute_error # type: ignore
 
 import random
 
-with open('../data/same-config-merged-stats.json', 'r') as file:
+with open('../data/diff-config-merged-stats.json', 'r') as file:
     data = json.load(file)
 
 node_model = {}
@@ -123,7 +123,7 @@ for target in targets:
 
 print(node_model)
 
-with open('../data/same-config-merged-results.json', 'w') as outfile:
+with open('../data/diff-config-merged-results.json', 'w') as outfile:
     json.dump(node_model, outfile, indent=4)
 
 """

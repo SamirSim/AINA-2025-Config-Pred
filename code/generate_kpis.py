@@ -33,7 +33,7 @@ def compute_statistics(data):
 
 # Initialize a dictionary to store transmission counts for each node
 transmission_counts = {}
-file_title = 'same-config'
+file_title = 'diff-config'
 filename = '../data/'+file_title+'.txt'
 
 # Read the logs from the file
