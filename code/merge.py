@@ -27,7 +27,7 @@ def compute_statistics(data):
 
     return stats
 
-file_title = 'same-config'
+file_title = 'same-config-latency'
 filename = '../data/'+file_title+'-series.json'
 
 with open(filename, 'r') as file:
@@ -60,3 +60,4 @@ final_dict_str_keys = {node: convert_keys_to_strings(config_dict) for node, conf
 json_file = '../data/' + file_title + '-merged-stats.json'
 with open(json_file, 'w') as outfile:
     json.dump(final_dict_str_keys, outfile, indent=4)
+

@@ -42,7 +42,7 @@ def predict(data, target, k=3):
     y_pred = weighted_sum / total_weight
     return y_pred
 
-with open('../data/same-config-stats.json', 'r') as file:
+with open('../data/same-config-latency-stats.json', 'r') as file:
     data = json.load(file)
 
 node_model = {}
@@ -92,5 +92,5 @@ for node_id in ("95", "101", "102", "103", "104", "105", "106", "107", "108", "1
 print(node_model)
 
 
-with open('../data/naive-approach-results.json', 'w') as outfile:
+with open('../data/naive-approach-latency-results.json', 'w') as outfile:
     json.dump(node_model, outfile, indent=4)

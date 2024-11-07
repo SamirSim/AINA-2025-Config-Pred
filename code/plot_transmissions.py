@@ -66,48 +66,116 @@ for line in logs.splitlines():
 
 
 # Create a figure
-num_nodes = len(("95", "101", "102", "103", "104", "105", "106", "108", "109"))
+#nodes = ["95", "101", "102", "103", "104", "105", "106", "108", "109"]
+nodes = ["102", "105", "106"]
+
+num_nodes = len(nodes)
 plt.figure(figsize=(10, 2 * num_nodes))  # Adjust the figure height based on the number of nodes
 
-for i, node_id in enumerate(("95", "101", "102", "103", "104", "105", "106", "108", "109")):
-    # Extract timestamps and transmission counts for the node
-    timestamps = []
-    transmissions = []
-    config_changes = []
-    
-    for entry in transmission_timeline[node_id]:
-        timestamp, value = entry
-        timestamps.append(timestamp)
-        if isinstance(value, tuple):  # Configuration change
-            config_changes.append((timestamp, value))
-        else:
-            transmissions.append(value)
-    
-    # Generate for each configuration the succession of transmission counts
-    config_transmissions = defaultdict(list)
-    for timestamp, value in transmission_timeline[node_id]:
-        if isinstance(value, tuple):
-            config = value
-        else:
-            config_transmissions[config].append(value)
+to_plot = "boxplot"  # Choose between "boxplot" and "timeline"
+#to_plot = "timeline"  # Choose between "boxplot" and "timeline"
 
-    # Create a subplot for the current node
-    plt.subplot(num_nodes, 1, i + 1)  # (rows, cols, panel number)
-    
-    # Plot transmissions over time for the current node
-    plt.plot(timestamps[:len(transmissions)], transmissions, label=f"Node {node_id}", marker='o')
-    
-    # Plot configuration changes as vertical lines
-    for config_change in config_changes:
-        ts, config = config_change
-        plt.axvline(x=ts, color='r', linestyle='--', alpha=0.5)  # Adjust alpha for visibility
-    
-    # Customize each subplot
-    plt.xlabel('Time (s)')
-    plt.ylabel('Transmission Count')
-    plt.title(f'Evolution of Transmissions for Node {node_id}')
-    plt.grid(True)
+# Plot the boxplots for each node
+if to_plot == "boxplot":
+    for i, node_id in enumerate(nodes):
+        # Extract timestamps and transmission counts for the node
+        timestamps = []
+        transmissions = []
+        config_changes = []
+        
+        for entry in transmission_timeline[node_id]:
+            timestamp, value = entry
+            timestamps.append(timestamp)
+            if isinstance(value, tuple):  # Configuration change
+                config_changes.append((timestamp, value))
+            else:
+                transmissions.append(value)
+        
+        # Generate for each configuration the succession of transmission counts
+        config_transmissions = defaultdict(list)
+        for timestamp, value in transmission_timeline[node_id]:
+            if isinstance(value, tuple):
+                config = value
+            else:
+                config_transmissions[config].append(value)
+
+        # Prepare data for the boxplot
+        data = [transmissions for transmissions in config_transmissions.values() if transmissions]
+
+        min_bound = 0
+        max_bound = 100
+        data = data[min_bound:max_bound]  # Limit the number of configurations for plotting
+        config_transmissions = dict(list(config_transmissions.items())[min_bound:max_bound])
+        
+        # Create a subplot for the current node
+        plt.subplot(num_nodes, 1, i + 1)  # (rows, cols, panel number)
+        
+        # Create the boxplot for the current node
+        #plt.boxplot(data, patch_artist=True, showfliers=True)
+        #plt.violinplot(data, showmedians=True)
+        mean = [np.mean(transmissions) for transmissions in data]
+        variance = [np.var(transmissions) for transmissions in data]
+        std_dev =[np.std(transmissions) for transmissions in data]
+        plt.scatter(range(1, len(data) + 1), mean, label='Mean', marker='o', color='r')
+        plt.scatter(range(1, len(data) + 1), variance, label='Variance', marker='o', color='g')
+        plt.scatter(range(1, len(data) + 1), std_dev, label='Standard Deviation', marker='o', color='b')
+        
+        # Remove xticks and labels
+        plt.xticks([])
+        if i == 0:
+            plt.legend()
+        
+        # Label each configuration on the x-axis
+        #plt.xticks(range(1, len(config_transmissions) + 1), [str(cfg) for cfg in config_transmissions.keys()], rotation=90)
+        #plt.ylabel('Transmission Count')
+        #plt.title(f'Transmission Count Distribution for Node {node_id}')
+        plt.ylabel('Mean, Variance, Standard Deviation')
+        plt.title(f'Mean, Variance, and Standard Deviation of Transmissions for Node {node_id}')
+        plt.grid(axis='y', linestyle='--', alpha=0.7)
+else:
+    # Plot the transmission counts over time for each node
+    for i, node_id in enumerate(nodes):
+        # Extract timestamps and transmission counts for the node
+        timestamps = []
+        transmissions = []
+        config_changes = []
+        
+        for entry in transmission_timeline[node_id]:
+            timestamp, value = entry
+            timestamps.append(timestamp)
+            if isinstance(value, tuple):  # Configuration change
+                config_changes.append((timestamp, value))
+            else:
+                transmissions.append(value)
+        
+        # Generate for each configuration the succession of transmission counts
+        config_transmissions = defaultdict(list)
+        for timestamp, value in transmission_timeline[node_id]:
+            if isinstance(value, tuple):
+                config = value
+            else:
+                config_transmissions[config].append(value)
+        
+        # Create a subplot for the current node
+        plt.subplot(num_nodes, 1, i + 1)  # (rows, cols, panel number)
+        
+        # Plot transmissions over time for the current node
+        plt.plot(timestamps[:len(transmissions)], transmissions, label=f"Node {node_id}", marker='o')
+        
+        # Plot configuration changes as vertical lines
+        for config_change in config_changes:
+            ts, config = config_change
+            plt.axvline(x=ts, color='r', linestyle='--', alpha=0.5)  # Adjust alpha for visibility
+        
+        # Customize each subplot
+        plt.xlabel('Time (s)')
+        plt.ylabel('Transmission Count')
+        plt.title(f'Evolution of Transmissions for Node {node_id}')
+        plt.grid(True)
 
 # Adjust layout for better spacing
+#plt.xticks(range(1, len(config_transmissions) + 1), [str(cfg) for cfg in config_transmissions.keys()], rotation=90)
 plt.tight_layout()
+#plt.legend()
+plt.savefig("../figures/mean-var-dev-transmissions.pdf", format="pdf", bbox_inches="tight")
 plt.show()
