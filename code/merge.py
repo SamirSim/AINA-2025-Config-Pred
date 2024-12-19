@@ -1,6 +1,6 @@
 import json
 import numpy as np # type: ignore
-
+from time import sleep
 
 # Helper function to convert tuple keys to strings
 def convert_keys_to_strings(d):
@@ -33,15 +33,14 @@ filename = '../data/'+file_title+'-series.json'
 with open(filename, 'r') as file:
     data = json.load(file)
 
-# Calculate the cutoff index for the first 80% of the data
-cutoff_index = int(0.8 * len(data))
-
-# Keep only the first 80% of the items by converting to list and back to dictionary
-data = dict(list(data.items())[:cutoff_index])
 
 merged_data = {}
 for node, config_dict in data.items():
-    for config, transmissions in config_dict.items():
+    print(len(config_dict))
+    cutoff_index = int(0.8 * len(config_dict))
+    print(len(list(config_dict.items())[:cutoff_index]))
+    sleep(2)
+    for config, transmissions in list(config_dict.items())[:cutoff_index]:
         if config not in merged_data:
             merged_data[config] = transmissions
         else:
