@@ -1,7 +1,7 @@
 import json
-import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
+import matplotlib.pyplot as plt # type: ignore
+import numpy as np # type: ignore
+import seaborn as sns # type: ignore
 
 sns.set(style="whitegrid")
 
@@ -22,8 +22,11 @@ for node in node_ids:
     transmissions = []
     
     for config in node_data.values():
-        config_ = [0 if e == 0 else int(1/e) for e in config]
-        transmissions.extend(config_)
+        if len(config) < 90:
+            print(config, len(config))
+        else:
+            config_ = [0 if e == 0 else int(1/e) for e in config]
+            transmissions.extend(config_)
     unique, counts = np.unique(transmissions, return_counts=True)
     
     # Combine transmissions greater than 0.25 into one category

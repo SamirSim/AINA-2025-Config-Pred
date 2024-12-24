@@ -1,14 +1,15 @@
 import json
-import numpy as np
+import numpy as np # type: ignore
 import matplotlib.pyplot as plt  # type: ignore
 from collections import Counter
-import seaborn as sns
+import seaborn as sns # type: ignore
 
 # Load sample JSON Data
 with open('../data/diff-config-long-1-transmissions-per-config-series.json', 'r') as file:
     data = json.load(file)
 
 sns.set(style="whitegrid")
+sns.set(font_scale=1.4)
 
 # Step 1: Extract configurations and identify the most common one
 configs = []
@@ -71,14 +72,14 @@ for i in range(1, len(bin_edges)):
     bin_heights = [hist_data[node].count(i) for node in sorted_nodes]
     plt.bar(
         node_positions, bin_heights, bar_width,
-        bottom=bottoms, label=f"{i}", edgecolor='black'
+        bottom=bottoms, label=f"{i}", 
     )
     bottoms += bin_heights  # Increment bottom for stacking
 
 bin_heights = [hist_data[node].count(0) for node in sorted_nodes]
 plt.bar(
     node_positions, bin_heights, bar_width,
-    bottom=bottoms, label="Failures", edgecolor='black'
+    bottom=bottoms, label="Failures", 
 )
 bottoms += bin_heights  # Increment bottom for stacking
 

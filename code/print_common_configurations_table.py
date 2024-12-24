@@ -1,9 +1,12 @@
-import pandas as pd
+import pandas as pd # type: ignore
 import json
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+import numpy as np # type: ignore
+import matplotlib.pyplot as plt # type: ignore
+import seaborn as sns # type: ignore
 import random
+
+sns.set(font_scale=1.2)
+#plt.rcParams['font.family'] = 'Helvetica'
 
 # Example input data
 data = {
@@ -65,7 +68,7 @@ sns.heatmap(
     table.replace("N/A", None).astype(float),  # Use NaN for plotting, "N/A" for display
     annot=table,  # Annotate the heatmap with the table content (numbers and "N/A")
     fmt="",  # Prevent seaborn from formatting annotations
-    cmap="coolwarm",  # Colormap
+    cmap="RdYlGn",  # Colormap
     cbar_kws={'label': 'Mean Reception Rate'},  # Label for the color bar
     linewidths=0.5
 )
@@ -73,7 +76,7 @@ sns.heatmap(
 # Adjust labels
 plt.title("Mean Reception Rate for Common Configurations")
 plt.xlabel("Configurations")
-plt.ylabel("Nodes")
+plt.ylabel("Links")
 plt.xticks(rotation=45, ha="right")
 plt.tight_layout()
 

@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt # type: ignore
 import json
 import numpy as np # type: ignore
 import time
+import seaborn as sns # type: ignore
 
 file_title = 'diff-config-long'
 # Load data from JSON files
@@ -70,9 +71,9 @@ for idx, node_id in enumerate(nodes_to_plot):
     mse_values_naive = [mse_values_naive[i] for i in sorted_indices_naive]
 
     # Plot the data as lines
-    axes[idx].plot(splits, mse_values, label="Original", marker='o', color="blue", alpha=0.7)
-    axes[idx].plot(splits_merged, mse_values_merged, label="Merged", marker='o', color="orange", alpha=0.7)
-    axes[idx].plot(splits_naive, mse_values_naive, label="Naive", marker='o', color="green", alpha=0.7)
+    axes[idx].plot(splits, mse_values, label="Single-link Regression", marker='o', color="blue", alpha=0.7)
+    axes[idx].plot(splits_merged, mse_values_merged, label="Global Regression", marker='o', color="orange", alpha=0.7)
+    axes[idx].plot(splits_naive, mse_values_naive, label="Single-link k-NN", marker='o', color="green", alpha=0.7)
 
     # Add grid, title, and adjust tick rotation
     axes[idx].set_title(f'Node {node_id}')

@@ -75,9 +75,9 @@ for node_id in ("m3-123", "m3-133", "m3-143", "m3-153", "m3-150", "m3-159", "m3-
 
     # Number of random splits to perform
     #n_splits = [0.8]
-    n_splits = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+    n_splits = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]
 
-    size_testing_ = 0.2
+    size_testing_ = 0.3
 
     res = {}
     res_merged = {}
@@ -146,8 +146,8 @@ for node_id in ("m3-123", "m3-133", "m3-143", "m3-153", "m3-150", "m3-159", "m3-
                 #print(X_train.head())
                 #print(df[target])
 
-                print("data: ", y_train)
-                print("test: ", y_test)
+                #print("data: ", y_train)
+                #print("test: ", y_test)
                 #sleep(2)
 
                 #print("size of X_train: ", len(X_train))
@@ -186,7 +186,7 @@ for node_id in ("m3-123", "m3-133", "m3-143", "m3-153", "m3-150", "m3-159", "m3-
                 X_train_merged = X_merged
                 y_train_merged = df_merged[target]
 
-                print("data merged: ", y_train_merged)
+                #print("data merged: ", y_train_merged)
 
                 #print("size of X_train_merged: ", len(X_train_merged))
                 #sleep(2)
@@ -221,6 +221,8 @@ for node_id in ("m3-123", "m3-133", "m3-143", "m3-153", "m3-150", "m3-159", "m3-
                     avg_mse = np.mean(results[name]['mse'])
                     avg_r2 = np.mean(results[name]['r2'])
                     avg_mae = np.mean(results[name]['mae'])
+
+                    print(f"Model: {name}, MSE: {avg_mse}, R^2: {avg_r2}, MAE: {avg_mae} for split {i}")
 
                     if avg_mse < best_mse:
                         best_mse = avg_mse
@@ -273,7 +275,6 @@ for node_id in ("m3-123", "m3-133", "m3-143", "m3-153", "m3-150", "m3-159", "m3-
                         best_mse_merged = avg_mse
                         best_model_merged = name
                 #print(results_merged[best_model_merged]['mse'])
-                
 
             res_split[cut_off_] = {"model": best_model, "mse": results[best_model]['mse'], "mae": results[best_model]['mae'], "r2": results[best_model]['r2']}
             
@@ -295,12 +296,13 @@ for node_id in ("m3-123", "m3-133", "m3-143", "m3-153", "m3-150", "m3-159", "m3-
     node_model_naive[node_id] = res_naive
 
 print(node_model)
+sleep(10)
 
-with open('../data/'+file_title+'-results-mul-runs-split.json', 'w') as outfile:
+with open('../data/'+file_title+'-results-mul-runs-split-'+str(size_testing)+'.json', 'w') as outfile:
     json.dump(node_model, outfile, indent=4)
 
-with open('../data/'+file_title+'-merged-results-mul-runs-split.json', 'w') as outfile:
+with open('../data/'+file_title+'-merged-results-mul-runs-split-'+str(size_testing)+'.json', 'w') as outfile:
     json.dump(node_model_merged, outfile, indent=4)
 
-with open('../data/'+file_title+'-naive-results-mul-runs-split.json', 'w') as outfile:
+with open('../data/'+file_title+'-naive-results-mul-runs-split-'+str(size_testing)+'.json', 'w') as outfile:
     json.dump(node_model_naive, outfile, indent=4)

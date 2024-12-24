@@ -1,16 +1,16 @@
 import re
 import json
 from collections import defaultdict
-import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
-import pandas as pd
+import matplotlib.pyplot as plt # type: ignore
+import numpy as np  # type: ignore
+import seaborn as sns # type: ignore
+import pandas as pd # type: ignore
 import random
 
 sns.set(style="whitegrid")
 random.seed(40)
 
-sns.set(font_scale=0.8)
+sns.set(font_scale=1.4)
 
 # File paths
 file_titles = [
