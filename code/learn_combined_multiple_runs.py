@@ -298,11 +298,11 @@ for node_id in ("m3-123", "m3-133", "m3-143", "m3-153", "m3-150", "m3-159", "m3-
 print(node_model)
 sleep(10)
 
-with open('../data/'+file_title+'-results-mul-runs-split-'+str(size_testing)+'.json', 'w') as outfile:
+with open('../data/'+file_title+'-results-mul-runs-split.json', 'w') as outfile:
     json.dump(node_model, outfile, indent=4)
 
-with open('../data/'+file_title+'-merged-results-mul-runs-split-'+str(size_testing)+'.json', 'w') as outfile:
+with open('../data/'+file_title+'-merged-results-mul-runs-split.json', 'w') as outfile:
     json.dump(node_model_merged, outfile, indent=4)
 
-with open('../data/'+file_title+'-naive-results-mul-runs-split-'+str(size_testing)+'.json', 'w') as outfile:
+with open('../data/'+file_title+'-naive-results-mul-runs-split.json', 'w') as outfile:
     json.dump(node_model_naive, outfile, indent=4)
