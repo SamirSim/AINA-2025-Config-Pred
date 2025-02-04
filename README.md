@@ -1,6 +1,6 @@
 # FIT IoT-Lab CSMA Experimentation
 
-This code corresponds to the two contributions described in the following preprint paper (please cite this in case you use the code):
+This code corresponds to the two contributions described in the following accepted (to appear) paper (please cite this in case you use the code):
 
 ```
 @article{si2025config-pred,
@@ -11,17 +11,9 @@ This code corresponds to the two contributions described in the following prepri
 }
 ```
 
-This project contains firmware, scripts, and analysis tools for running experiments on the FIT IoT-Lab platform, focusing on CSMA behavior, retransmissions, and predictive modeling.
+This project contains firmware, scripts, and analysis tools for running experiments on the FIT IoT-Lab platform, focusing on 802.15.4 CSMA configurations behavior and their impact on the number of packet retransmissions, and how we can provide accurate predictions for unexplored configurations.
 
 ## Code Structure
-
-### `code/expe/` - Experiment Firmware & Execution Scripts
-
-- **`unicast-sender.c`**: Firmware for the sender node (M3) in FIT IoT-Lab.
-- **`unicast-receiver.c`**: Firmware for the receiver node (M3) in FIT IoT-Lab.
-- **`csma.c`**: CSMA implementation for Contiki-NG, modified to log retransmissions when `DEBUG=1`.
-- **`exp-test-config.sh`**: Creates and configures an experiment, assigning firmware and parameters.
-- **`run-exp.sh`**: Calls `exp-test-config.sh` with experiment parameters such as packet size.
 
 ### `code/` - Log Processing & Analysis
 
@@ -30,6 +22,14 @@ This project contains firmware, scripts, and analysis tools for running experime
 - **`plot-results-split-boxplot.py`**: Generates comparative boxplots for different prediction approaches.
 - **`plot_results.py`**: Plots model results focusing on the 70% training data split.
 - **`print_common_configurations_table.py`**: Analyzes and prints statistics on retransmissions across common configurations.
+
+### `code/expe/` - Experiment Firmware & Execution Scripts
+
+- **`unicast-sender.c`**: Firmware for the sender node (M3) in FIT IoT-Lab.
+- **`unicast-receiver.c`**: Firmware for the receiver node (M3) in FIT IoT-Lab.
+- **`csma.c`**: CSMA implementation for Contiki-NG, modified to log retransmissions when `DEBUG=1`.
+- **`exp-test-config.sh`**: Creates and configures an experiment, assigning firmware and parameters.
+- **`run-exp.sh`**: Calls `exp-test-config.sh` with experiment parameters such as packet size.
 
 ### `data/` - Experiment Logs
 

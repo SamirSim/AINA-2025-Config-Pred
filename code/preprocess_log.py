@@ -2,7 +2,7 @@
 import json
 import time
 
-for i in ["6"]:
+for i in ["1", "2", "3", "4", "5", "6"]:
     file_title = 'diff-config-long-'+str(i)
     filename = '../data/' + file_title + '.txt'
     output_json_file = '../data/' + file_title + '-transmissions-per-config-series.json'
