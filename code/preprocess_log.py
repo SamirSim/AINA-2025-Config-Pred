@@ -6,7 +6,6 @@ for i in ["1", "2", "3", "4", "5", "6"]:
     file_title = 'diff-config-long-'+str(i)
     filename = '../data/' + file_title + '.txt'
     output_json_file = '../data/' + file_title + '-transmissions-per-config-series.json'
-    #output_json_file = '../data/tmp_out.txt'
     output_json_file_stats = '../data/' + file_title + '-transmissions-per-config-stats.json'
 
     # Read and parse logs
